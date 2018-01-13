@@ -3,8 +3,10 @@
 let
   kpart = pkgs.callPackage ./kpart.nix {
     linux = config.boot.kernelPackages.kernel;
-    initrd = "nope";
-    cmdline = "console=ttyS2,115200n8 earlyprintk=ttyS2,115200n8 console=tty1 init=/sbin/init root=PARTUUID=%U/PARTNROFF=1 rootwait rw noinitrd loglevel=4";
+    initrd = "${config.system.build.toplevel}/initrd";
+    cmdline = pkgs.runCommand "cmdline" {} ''
+      echo "systemConfig=${config.system.build.toplevel} init=${config.system.build.toplevel}/init $(cat ${config.system.build.toplevel}/kernel-params)" > $out
+    '';
   };
 in
 {

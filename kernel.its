@@ -13,6 +13,17 @@
             load = <0>;
             entry = <0>;
         };
+        ramdisk@1 {
+            description = "ramdisk";
+            data = /incbin/("@initrd@");
+            type = "ramdisk";
+            arch = "arm64";
+            os = "linux";
+            compression = "none";
+            hash@1 {
+                algo = "sha1";
+            };
+        };
         fdt@1{
             description = "rk3399-gru-bob-r0.dtb";
             data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-bob-r0.dtb");
@@ -159,58 +170,72 @@
         conf@1{
             kernel = "kernel@1";
             fdt = "fdt@1";
+            ramdisk = "ramdisk@1";
         };
         conf@2{
             kernel = "kernel@1";
             fdt = "fdt@2";
+            ramdisk = "ramdisk@1";
         };
         conf@3{
             kernel = "kernel@1";
             fdt = "fdt@3";
+            ramdisk = "ramdisk@1";
         };
         conf@4{
             kernel = "kernel@1";
             fdt = "fdt@4";
+            ramdisk = "ramdisk@1";
         };
         conf@5{
             kernel = "kernel@1";
             fdt = "fdt@5";
+            ramdisk = "ramdisk@1";
         };
         conf@6{
             kernel = "kernel@1";
             fdt = "fdt@6";
+            ramdisk = "ramdisk@1";
         };
         conf@7{
             kernel = "kernel@1";
             fdt = "fdt@7";
+            ramdisk = "ramdisk@1";
         };
         conf@8{
             kernel = "kernel@1";
             fdt = "fdt@8";
+            ramdisk = "ramdisk@1";
         };
         conf@9{
             kernel = "kernel@1";
             fdt = "fdt@9";
+            ramdisk = "ramdisk@1";
         };
         conf@10{
             kernel = "kernel@1";
             fdt = "fdt@10";
+            ramdisk = "ramdisk@1";
         };
         conf@11{
             kernel = "kernel@1";
             fdt = "fdt@11";
+            ramdisk = "ramdisk@1";
         };
         conf@12{
             kernel = "kernel@1";
             fdt = "fdt@12";
+            ramdisk = "ramdisk@1";
         };
         conf@13{
             kernel = "kernel@1";
             fdt = "fdt@13";
+            ramdisk = "ramdisk@1";
         };
         conf@14{
             kernel = "kernel@1";
             fdt = "fdt@14";
+            ramdisk = "ramdisk@1";
         };
     };
 };
