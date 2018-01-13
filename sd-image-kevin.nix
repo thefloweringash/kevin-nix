@@ -26,6 +26,7 @@ in
   boot.kernelPackages = pkgs.linuxPackages_gru_4_4;
 
   sdImage.kpart = kpart;
+  sdImage.storePaths = [ config.system.build.toplevel ];
 
   # FIXME: this probably should be in installation-device.nix
   users.extraUsers.root.initialHashedPassword = "";

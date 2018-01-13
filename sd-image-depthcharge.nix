@@ -14,14 +14,11 @@
 with lib;
 
 let
-#  rootfsImage = import ./make-ext4-fs.nix {
-#    inherit pkgs;
-#    inherit (config.sdImage) storePaths installPaths;
-#    volumeLabel = "NIXOS_SD";
-#  };
-  rootfsImage = pkgs.runCommand "dummy" {} ''
-    echo "dummy" > $out
-  '';
+  rootfsImage = import <nixos/lib/make-ext4-fs.nix> {
+    inherit pkgs;
+    inherit (config.sdImage) storePaths;
+    volumeLabel = "NIXOS_SD";
+  };
 in
 {
   options.sdImage = {
@@ -78,7 +75,7 @@ in
             label: gpt
             label-id: $diskUUID
             size=64m, type=FE3A2A5D-4F32-41A7-B725-ACCC3285A309, uuid=$bootUUID, name=kernel
-            type=B921B045-1DF0-41C3-AF44-4C6F280D3FAE, uuid=$rootUUID, name=NIX_SD, attrs=LegacyBIOSBootable
+            type=B921B045-1DF0-41C3-AF44-4C6F280D3FAE, uuid=$rootUUID, name=NIX_SD
         EOF
 
         cgpt add -i 1 -S 1 -T 5 -P 10 $out
