@@ -15,11 +15,11 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ lzma libyaml openssl libuuid ];
   buildPhase = ''
-    make BUILD=build build/futility/futility
+    make BUILD=build build/futility/futility build/cgpt/cgpt
   '';
   installPhase = ''
     mkdir -p $out/bin
-    cp build/futility/futility $out/bin
+    cp build/futility/futility build/cgpt/cgpt $out/bin
 
     mkdir -p $out/share/vboot
     cp -ar tests/devkeys $out/share/vboot
