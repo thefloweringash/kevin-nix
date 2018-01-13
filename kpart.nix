@@ -1,4 +1,4 @@
-{ stdenv, runCommand, linux, cmdline, vboot_utils, dtc, ubootTools }:
+{ stdenv, runCommand, linux, cmdline, vboot_utils, dtc, ubootTools, initrd }:
 
 runCommand "linux.kpart" {
   inherit linux;

@@ -1,8 +1,6 @@
 { stdenv, runCommand, fetchurl, buildLinux, kernelPatches ? [] }:
 
 let
-  sources = import ./ayufan-rock64-sources.nix;
-
   fetchGru = { commit, sha256 }:
     let
       raw = fetchurl {
@@ -16,7 +14,7 @@ let
 in
 
 buildLinux {
-  inherit stdenv;
+  inherit stdenv kernelPatches;
 
   src = fetchGru {
     commit = "3aa6760c93900123744c104b67fecda917f73fde";
@@ -29,10 +27,4 @@ buildLinux {
   configfile = ./linux-gru.config;
 
   allowImportFromDerivation = true; # Let nix check the assertions about the config
-
-  kernelPatches = kernelPatches ++ [
-    { name = "arch-1"; patch = ./0001-Input-atmel_mxt_ts-Use-KERN_DEBUG-loglevel-for-statu.patch; }
-    { name = "arch-2"; patch = ./0002-Revert-CHROMIUM-drm-rockchip-Add-PSR-residency-debug.patch; }
-    { name = "arch-3"; patch = ./0003-temporary-hack-to-fix-console-output.patch; }
-  ];
 }
