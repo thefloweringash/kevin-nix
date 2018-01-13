@@ -3,7 +3,7 @@
 let
   kpart = pkgs.callPackage ./kpart.nix {
     linux = config.boot.kernelPackages.kernel;
-    initrd = "${config.system.build.toplevel}/initrd";
+    initrd = "${config.system.build.initialRamdisk}/initrd";
     cmdline = pkgs.runCommand "cmdline" {} ''
       echo "systemConfig=${config.system.build.toplevel} init=${config.system.build.toplevel}/init $(cat ${config.system.build.toplevel}/kernel-params)" > $out
     '';
