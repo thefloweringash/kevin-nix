@@ -39,10 +39,10 @@ in
     };
 
     kpart = mkOption {
-      type = types.package;
-      example = literalExample "kpart";
+      type = types.string;
+      example = literalExample "\${config.system.build.toplevel}/kpart";
       description = ''
-        Kernel partition to load onto the image
+        Kernel partition to install into the generated SD image.
       '';
     };
   };

@@ -1,20 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let
-  kpart = pkgs.callPackage ./kpart.nix {
-    linux = config.boot.kernelPackages.kernel;
-    initrd = "${config.system.build.initialRamdisk}/initrd";
-    cmdline = pkgs.runCommand "cmdline" {} ''
-      echo "systemConfig=${config.system.build.toplevel} init=${config.system.build.toplevel}/init $(cat ${config.system.build.toplevel}/kernel-params)" > $out
-    '';
-  };
-in
 {
   imports = [
     <nixos/modules/profiles/base.nix>
     <nixos/modules/profiles/installation-device.nix>
     ./sd-image-depthcharge.nix
     ./modules/packages.nix
+    ./modules/kpart.nix
   ];
 
   assertions = lib.singleton {
@@ -25,7 +17,7 @@ in
 
   boot.kernelPackages = pkgs.linuxPackages_gru_4_4;
 
-  sdImage.kpart = kpart;
+  sdImage.kpart = "${config.system.build.toplevel}/kpart";
   sdImage.storePaths = [ config.system.build.toplevel ];
 
   # FIXME: this probably should be in installation-device.nix

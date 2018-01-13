@@ -5,7 +5,7 @@
     images {
         kernel@1{
             description = "kernel";
-            data = /incbin/("@linux@/Image");
+            data = /incbin/("kernel");
             type = "kernel_noload";
             arch = "arm64";
             os = "linux";
@@ -15,7 +15,7 @@
         };
         ramdisk@1 {
             description = "ramdisk";
-            data = /incbin/("@initrd@");
+            data = /incbin/("initrd");
             type = "ramdisk";
             arch = "arm64";
             os = "linux";
@@ -26,7 +26,7 @@
         };
         fdt@1{
             description = "rk3399-gru-bob-r0.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-bob-r0.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-bob-r0.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -36,7 +36,7 @@
         };
         fdt@2{
             description = "rk3399-gru-bob-r2.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-bob-r2.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-bob-r2.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -46,7 +46,7 @@
         };
         fdt@3{
             description = "rk3399-gru-bob-r4.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-bob-r4.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-bob-r4.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -56,7 +56,7 @@
         };
         fdt@4{
             description = "rk3399-gru-gru-r1.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-gru-r1.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-gru-r1.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -66,7 +66,7 @@
         };
         fdt@5{
             description = "rk3399-gru-gru-r2.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-gru-r2.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-gru-r2.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -76,7 +76,7 @@
         };
         fdt@6{
             description = "rk3399-gru-kevin-r5.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-kevin-r5.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-kevin-r5.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -86,7 +86,7 @@
         };
         fdt@7{
             description = "rk3399-gru-kevin-r6.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-kevin-r6.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-kevin-r6.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -96,7 +96,7 @@
         };
         fdt@8{
             description = "rk3399-gru-nefario-r0.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-nefario-r0.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-nefario-r0.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -106,7 +106,7 @@
         };
         fdt@9{
             description = "rk3399-gru-rainier-r0.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-rainier-r0.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-rainier-r0.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -116,7 +116,7 @@
         };
         fdt@10{
             description = "rk3399-gru-scarlet-r0.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-scarlet-r0.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-scarlet-r0.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -126,7 +126,7 @@
         };
         fdt@11{
             description = "rk3399-gru-scarlet-r1.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-scarlet-r1.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-scarlet-r1.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -136,7 +136,7 @@
         };
         fdt@12{
             description = "rk3399-gru-scarlet-r2.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-scarlet-r2.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-scarlet-r2.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -146,7 +146,7 @@
         };
         fdt@13{
             description = "rk3399-gru-scarlet-r3-sku7.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-scarlet-r3-sku7.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-scarlet-r3-sku7.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
@@ -156,7 +156,7 @@
         };
         fdt@14{
             description = "rk3399-gru-scarlet-r4-sku6.dtb";
-            data = /incbin/("@linux@/dtbs/rockchip/rk3399-gru-scarlet-r4-sku6.dtb");
+            data = /incbin/("dtbs/rockchip/rk3399-gru-scarlet-r4-sku6.dtb");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
