@@ -112,3 +112,6 @@ Tested against nixpkgs f607771d0f5.
 
  * Use a vanilla kernel. It is expected that 4.16 will include support
    that enables the display without additional patches.
+
+ * Generate the kernel.its file based on the dtbs directory instead of
+   explicitly specifying each expected dtb.
