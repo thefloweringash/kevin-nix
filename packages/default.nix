@@ -14,13 +14,4 @@ self: super: {
   };
 
   linuxPackages_gru_4_4 = super.linuxPackagesFor self.linux_gru_4_4;
-
-  linux_gru_4_4_kpart = super.callPackage ./kpart.nix {
-    cmdline="console=ttyS2,115200n8 earlyprintk=ttyS2,115200n8 console=tty1 init=/sbin/init root=PARTUUID=%U/PARTNROFF=1 rootwait rw noinitrd loglevel=4";
-    linux = self.linux_gru_4_4;
-  };
-
-  linux_gru_4_4_sdcard = super.callPackage ./sdcard.nix {
-    kpart = self.linux_gru_4_4_kpart;
-  };
 }

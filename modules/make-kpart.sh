@@ -1,12 +1,8 @@
 #!/bin/sh -e
 
-set -x
-
 out=$1
 
 cd $out
-
-ls -lh kernel
 
 PATH="@dtc@/bin:$PATH"
 
