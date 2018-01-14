@@ -1,10 +1,9 @@
 # This module creates a bootable SD card image containing the given
 # NixOS configuration. The generated image is GPT formatted, with a
-# bootloader placed at LBA 64 for the Rockchip low level bootloader,
-# and the ext4 root (including /boot) in the second partition. The
-# generated image is sized to fit its contents, and a boot script
-# automatically resizes the root partition to fit the device on the
-# first boot.
+# kernel partition (kernel, initrd, dtbs, command line) in the first
+# partition and the ext4 root in the second partition. The generated
+# image is sized to fit its contents, and a boot script automatically
+# resizes the root partition to fit the device on the first boot.
 #
 # The derivation for the SD image will be placed in
 # config.system.build.sdImage
