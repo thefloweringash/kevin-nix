@@ -1,24 +1,12 @@
-{ stdenv, runCommand, fetchurl, buildLinux, kernelPatches ? [] }:
-
-let
-  fetchGru = { commit, sha256 }:
-    let
-      raw = fetchurl {
-       url = "https://chromium.googlesource.com/chromiumos/third_party/kernel/+archive/${commit}.tar.gz";
-       inherit sha256;
-       };
-     in runCommand "linux-gru-source" {} ''
-       mkdir $out
-       tar -C $out -xf ${raw}
-    '';
-in
+{ stdenv, runCommand, fetchgit, buildLinux, kernelPatches ? [] }:
 
 buildLinux {
   inherit stdenv kernelPatches;
 
-  src = fetchGru {
-    commit = "3aa6760c93900123744c104b67fecda917f73fde";
-    sha256 = "1nqma087civ6fnscpi767jcjp6iz9gg8gpvk1yb6x4cs8pyf3v89";
+  src = fetchgit {
+    url = "https://chromium.googlesource.com/chromiumos/third_party/kernel/";
+    rev = "3aa6760c93900123744c104b67fecda917f73fde";
+    sha256 = "0ff4qzw5mjz93v6midrg1g82v75nvqf40nk86zgqabbij58zwjy4";
   };
 
   version = "4.4.110-gru";
