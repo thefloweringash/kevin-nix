@@ -11,8 +11,7 @@ accomplished by the [Arch Linux ARM][] project, which builds an
 
 ## Status
 
-Weekend hobby project. Works for me. Does not support `nixos-rebuild
-switch`, boot configuration must be set manually.
+Weekend hobby project. Works for me.
 
 ## Building
 
@@ -30,7 +29,13 @@ Or try `./simple-build.sh`.
 
 ## Installation
 
-Dump image to SD card. Insert into Chromebook. Boot.
+ 1. Place device in [Developer Mode][]
+ 2. Dump image to SD card.
+ 3. Insert into Chromebook.
+ 4. Boot with Ctrl-U.
+
+
+[Developer Mode]: https://www.chromium.org/a/chromium.org/dev/chromium-os/developer-information-for-chrome-os-devices/generic
 
 ## Post installation configuration
 
@@ -38,7 +43,7 @@ Use the standard nixos-generate-config command to generate the
 hardware and filesystem configuration file. In the main configuration
 file (`configuration.nix`), include the two modules from this
 repository's `modules/` directory, which adds in the kernel package,
-and the kernel partition (kpart) builder. In you main
+and the depthcharge bootloader integration. In you main
 configuration.nix, specify your desired kernel. For example:
 
 ```
@@ -46,37 +51,31 @@ configuration.nix, specify your desired kernel. For example:
 {
   include = [
     ./kevin-nix/modules/packages.nix
-    ./kevin-nix/modules/kpart.nix
+    ./kevin-nix/modules/depthcharge.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_gru_4_4;
+
+  boot.loader.depthcharge.enable = true;
+  boot.loader.depthcharge.partition = "/dev/disk/by-partlabel/kernel";
 }
 ```
 
 ## nixos-rebuild switch
 
 The boot process scans the media for a partition designated as a
-kernel, using attributes stored in GPT. This kernel partition (kpart)
-is a Flattened Image Tree (fit) image including the kernel, a set of
-dtbs,the initrd, and the kernel command line. The `kpart` module
-produces this file as part of each nixos-rebuild.
+kernel, using attributes stored in GPT.
 
-Since the kernel command line in nixos determines which system
-configuration is booted, each kpart corresponds to a profile. To set
-the boot configuration you must install the kpart into the kernel
-partition.
+This kernel partition (kpart) is a Flattened Image Tree (fit) image
+including the kernel, a set of dtbs, the initrd, and the kernel
+command line.
 
-For example, on a microSD card install, the kernel partition will
-typically be at /dev/mmcblk1p1, and hence setting a profile as the
-boot profile is achieved through:
+The depthcharge module will will produce a kernel partition (`kpart`)
+file as part of the toplevel system, and on switch will write its
+contents to the kernel partition.
 
-```
-dd if=/run/current-system/kpart of=/dev/mmcblk1p1
-```
-
-Note that the kernel partition is not a GC root. If you remove old
-versions of your system profile, you may render your environment
-unbootable.
+The kernel partition is not a GC root. If you remove old versions of
+your system profile, you may render your environment unbootable.
 
 ### Generated partition layout
 
@@ -115,3 +114,12 @@ Tested against nixpkgs f607771d0f5.
 
  * Generate the kernel.its file based on the dtbs directory instead of
    explicitly specifying each expected dtb.
+
+ * Use depthcharge's fallback features to have multiple bootable
+   profiles.
+
+ * Build the open source Mali kernel module from ARM that matches the
+   [binary `libmali.so`][rockchip-linux/libmali] available from
+   rockchip.
+
+[rockchip-linux/libmali]: https://github.com/rockchip-linux/libmali
