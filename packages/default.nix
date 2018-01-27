@@ -14,4 +14,14 @@ self: super: {
   };
 
   linuxPackages_gru_4_4 = super.linuxPackagesFor self.linux_gru_4_4;
+
+  rockchip-linux-libmali = super.callPackage ./rockchip-linux-libmali/generic.nix {
+    driverName = "libmali-midgard-t86x-r13p0-wayland.so";
+  };
+
+  libmali-gldriver = super.callPackage ./rockchip-linux-libmali/gldriver.nix {};
+
+  rockchip-linux-libmali-gldriver = self.libmali-gldriver {
+    libmali = self.rockchip-linux-libmali;
+  };
 }
