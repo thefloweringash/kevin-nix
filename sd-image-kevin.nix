@@ -6,7 +6,7 @@
     <nixos/modules/profiles/installation-device.nix>
     ./sd-image-depthcharge.nix
     ./modules/packages.nix
-    ./modules/kpart.nix
+    ./modules/depthcharge.nix
   ];
 
   assertions = lib.singleton {
