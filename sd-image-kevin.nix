@@ -2,8 +2,8 @@
 
 {
   imports = [
-    <nixos/modules/profiles/base.nix>
-    <nixos/modules/profiles/installation-device.nix>
+    <nixpkgs/nixos/modules/profiles/base.nix>
+    <nixpkgs/nixos/modules/profiles/installation-device.nix>
     ./sd-image-depthcharge.nix
     ./modules/packages.nix
     ./modules/depthcharge.nix

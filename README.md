@@ -16,14 +16,8 @@ Weekend hobby project. Works for me.
 ## Building
 
 ```
-nix-build '<nixos>' \
-  -I nixos=... \
-  -I nixos-config=sd-image-kevin.nix \
-  -A config.system.build.sdImage
+nix-build release.nix -A sdImage
 ```
-
-`<nixos>` should refer to the `nixos` subdirectory of a nixpkgs
-checkout.
 
 Or try `./simple-build.sh`.
 

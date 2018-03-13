@@ -13,7 +13,7 @@
 with lib;
 
 let
-  rootfsImage = import <nixos/lib/make-ext4-fs.nix> {
+  rootfsImage = import <nixpkgs/nixos/lib/make-ext4-fs.nix> {
     inherit pkgs;
     inherit (config.sdImage) storePaths;
     volumeLabel = "NIXOS_SD";
