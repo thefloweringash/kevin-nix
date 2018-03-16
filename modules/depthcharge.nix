@@ -5,12 +5,19 @@ with lib;
 let
   cfg = config.boot.loader.depthcharge;
 
-  make-kpart = pkgs.runCommand "make-kpart.sh" {
+  make_kernel_its = pkgs.runCommand "make-kernel-its.sh" {} ''
+    cp ${./make-kernel-its.sh} $out
+    chmod a+x $out
+    patchShebangs $out
+  '';
+
+  make_kpart = pkgs.runCommand "make-kpart.sh" {
     inherit (pkgs) vboot_utils ubootTools dtc;
-    kernel_its = ./kernel.its;
+    inherit make_kernel_its;
   } ''
     substituteAll ${./make-kpart.sh} $out
     chmod a+x $out
+    patchShebangs $out
   '';
 in
 {
@@ -39,7 +46,7 @@ in
     system.boot.loader.id = "depthcharge";
 
     system.extraSystemBuilderCmds = ''
-      ${make-kpart} $out
+      ${make_kpart} $out
     '';
 
     system.build.installBootLoader = pkgs.writeScript "install-depthcharge.sh" ''

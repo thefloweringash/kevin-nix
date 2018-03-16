@@ -1,24 +1,23 @@
-#!/bin/sh -e
+#!/usr/bin/env bash
 
 out=$1
 
-cd $out
-
 PATH="@dtc@/bin:$PATH"
 
-cp @kernel_its@ ./kernel.its
-@ubootTools@/bin/mkimage -D "-I dts -O dtb -p 2048" -f kernel.its vmlinux.uimg
+@make_kernel_its@ $out > $out/kernel.its
 
-dd if=/dev/zero of=bootloader.bin bs=512 count=1
+@ubootTools@/bin/mkimage -D "-I dts -O dtb -p 2048" -f $out/kernel.its $out/vmlinux.uimg
 
-echo "systemConfig=$out init=$out/init $(cat kernel-params)" >> kpart-config;
+dd if=/dev/zero of=$out/bootloader.bin bs=512 count=1
+
+echo "systemConfig=$out init=$out/init $(cat $out/kernel-params)" > $out/kpart-config;
 
 @vboot_utils@/bin/futility vbutil_kernel \
   --pack $out/kpart \
   --version 1 \
-  --vmlinuz vmlinux.uimg \
+  --vmlinuz $out/vmlinux.uimg \
   --arch aarch64 \
   --keyblock @vboot_utils@/share/vboot/devkeys/kernel.keyblock \
   --signprivate @vboot_utils@/share/vboot/devkeys/kernel_data_key.vbprivk \
-  --config kpart-config \
-  --bootloader bootloader.bin
+  --config $out/kpart-config \
+  --bootloader $out/bootloader.bin
