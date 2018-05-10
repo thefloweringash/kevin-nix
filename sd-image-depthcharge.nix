@@ -71,7 +71,7 @@ in
     system.build.sdImage = pkgs.stdenv.mkDerivation {
       name = config.sdImage.imageName;
 
-      buildInputs = with pkgs; [ e2fsprogs parted libfaketime utillinux vboot_utils ];
+      buildInputs = with pkgs; [ e2fsprogs parted libfaketime utillinux vboot_reference ];
 
       diskUUID = "A8ABB0FA-2FD7-4FB8-ABB0-2EEB7CD66AFA";
       bootUUID = "534078AF-3BB4-EC43-B6C7-828FB9A788C6";

@@ -1,6 +1,4 @@
 self: super: {
-  vboot_utils = super.callPackages ./vboot_utils.nix {};
-
   linux_gru_4_4 = super.callPackage ./linux_gru_4_4.nix {
     kernelPatches = with self; [
       kernelPatches.bridge_stp_helper

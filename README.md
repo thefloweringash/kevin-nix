@@ -74,7 +74,7 @@ your system profile, you may render your environment unbootable.
 ### Generated partition layout
 
 ```
-$(nix-build --no-out-link -E 'import <nixpkgs> { overlays = [ (import ./packages) ]; }' -A vboot_utils)/bin/cgpt show $(readlink ./result)
+$(nix-build --no-out-link -E 'import <nixpkgs> { overlays = [ (import ./packages) ]; }' -A vboot_reference)/bin/cgpt show $(readlink ./result)
 
        start        size    part  contents
            0           1          PMBR
