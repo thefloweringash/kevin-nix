@@ -21,6 +21,20 @@ let
 in
 {
   options.sdImage = {
+    imageName = mkOption {
+      default = "${config.sdImage.imageBaseName}-${config.system.nixos.label}-${pkgs.stdenv.system}.img";
+      description = ''
+        Name of the generated image file.
+      '';
+    };
+
+    imageBaseName = mkOption {
+      default = "nixos-sd-image";
+      description = ''
+        Prefix of the name of the generated image file.
+      '';
+    };
+
     storePaths = mkOption {
       type = with types; listOf package;
       example = literalExample "[ pkgs.stdenv ]";
@@ -55,7 +69,7 @@ in
     };
 
     system.build.sdImage = pkgs.stdenv.mkDerivation {
-      name = "sd-image-${pkgs.stdenv.system}.img";
+      name = config.sdImage.imageName;
 
       buildInputs = with pkgs; [ e2fsprogs parted libfaketime utillinux vboot_utils ];
 
@@ -64,28 +78,34 @@ in
       rootUUID = "0340EA1D-C827-8048-B631-0C60D4478796";
 
       buildCommand = ''
+        mkdir -p $out/nix-support $out/sd-image
+        export img=$out/sd-image/${config.sdImage.imageName}
+
+        echo "${pkgs.stdenv.system}" > $out/nix-support/system
+        echo "file sd-image $img" >> $out/nix-support/hydra-build-products
+
         # Create the image file sized to fit /, plus 20M of slack, plus a kernel partition
         kernelSizeMegs=64
         rootSizeBlocks=$(du -B 512 --apparent-size ${rootfsImage} | awk '{ print $1 }')
         imageSize=$((rootSizeBlocks * 512 + (20 + $kernelSizeMegs) * 1024 * 1024))
-        truncate -s $imageSize $out
+        truncate -s $imageSize $img
 
-        sfdisk --no-reread --no-tell-kernel $out <<EOF
+        sfdisk --no-reread --no-tell-kernel $img <<EOF
             label: gpt
             label-id: $diskUUID
             size=64m, type=FE3A2A5D-4F32-41A7-B725-ACCC3285A309, uuid=$bootUUID, name=kernel
             type=B921B045-1DF0-41C3-AF44-4C6F280D3FAE, uuid=$rootUUID, name=NIX_SD
         EOF
 
-        cgpt add -i 1 -S 1 -T 5 -P 10 $out
+        cgpt add -i 1 -S 1 -T 5 -P 10 $img
 
         # Copy the kernel to the SD image
-        eval $(partx $out -o START,SECTORS --nr 1 --pairs)
-        dd conv=notrunc if=${config.sdImage.kpart} of=$out seek=$START count=$SECTORS
+        eval $(partx $img -o START,SECTORS --nr 1 --pairs)
+        dd conv=notrunc if=${config.sdImage.kpart} of=$img seek=$START count=$SECTORS
 
         # Copy the rootfs into the SD image
-        eval $(partx $out -o START,SECTORS --nr 2 --pairs)
-        dd conv=notrunc if=${rootfsImage} of=$out seek=$START count=$SECTORS
+        eval $(partx $img -o START,SECTORS --nr 2 --pairs)
+        dd conv=notrunc if=${rootfsImage} of=$img seek=$START count=$SECTORS
       '';
     };
 
