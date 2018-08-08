@@ -25,4 +25,6 @@
 
   # dev config?
   boot.loader.grub.enable = false;
+
+  boot.kernelParams = [ "console=tty1" ];
 }
