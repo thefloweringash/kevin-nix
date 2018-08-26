@@ -20,9 +20,6 @@
   sdImage.kpart = "${config.system.build.toplevel}/kpart";
   sdImage.storePaths = [ config.system.build.toplevel ];
 
-  # FIXME: this probably should be in installation-device.nix
-  users.extraUsers.root.initialHashedPassword = "";
-
   # dev config?
   boot.loader.grub.enable = false;
 
