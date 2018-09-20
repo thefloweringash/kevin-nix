@@ -22,4 +22,6 @@ self: super: {
   rockchip-linux-libmali-gldriver = self.libmali-gldriver {
     libmali = self.rockchip-linux-libmali;
   };
+
+  panfrost = super.callPackage ./panfrost.nix {};
 }
