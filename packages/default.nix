@@ -8,6 +8,7 @@ self: super: {
       { name = "arch-1"; patch = ./0001-Input-atmel_mxt_ts-Use-KERN_DEBUG-loglevel-for-statu.patch; }
       { name = "arch-2"; patch = ./0002-Revert-CHROMIUM-drm-rockchip-Add-PSR-residency-debug.patch; }
       { name = "arch-3"; patch = ./0003-temporary-hack-to-fix-console-output.patch; }
+      { name = "arch-4"; patch = ./0004-skip-HDCP-setup.patch; }
     ];
   };
 

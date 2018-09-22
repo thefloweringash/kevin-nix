@@ -12,12 +12,12 @@ let
 
     src = fetchgit {
       url = "https://chromium.googlesource.com/chromiumos/third_party/kernel/";
-      rev = "0ac175878149810e87acd790856faa3c3a1806a4";
-      sha256 = "1ihxm8w6vwbrdp9n40v2y3lppr058pk73bavcpcbsjcz1x6cddl9";
+      rev = "d5dcc34e053c963d083c2d4bf9409ede1878199a";
+      sha256 = "14dh0z1lhq0h5kqlhqhr89qqqmypa2pr8a71slzmkrpyfk3hbxvg";
     };
 
-    version = "4.4.123-ARCH";
-    modDirVersion = "4.4.123-ARCH";
+    version = "4.4.86-ARCH";
+    modDirVersion = "4.4.86-ARCH";
 
     configfile = ./linux-gru.config;
 
