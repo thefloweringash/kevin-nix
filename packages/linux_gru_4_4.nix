@@ -10,13 +10,14 @@ let
   drv = linuxManualConfig {
     inherit stdenv kernelPatches;
 
-    src = builtins.fetchGit {
+    src = fetchgit {
       url = "https://chromium.googlesource.com/chromiumos/third_party/kernel/";
-      rev = "fd7170200801a48f8881d29e64f272280204ddef";
+      rev = "96466abef15b7778bde7f3597e28c1c2b46c22e2";
+      sha256 = "16fk4z2pnzpfn5w11rms8q13x2hpnyj9b2b24bh6r808y85nqvzs";
     };
 
-    version = "4.4.154-ARCH";
-    modDirVersion = "4.4.154-ARCH";
+    version = "4.4.153-ARCH";
+    modDirVersion = "4.4.153-ARCH";
 
     configfile = ./linux-gru.config;
 
