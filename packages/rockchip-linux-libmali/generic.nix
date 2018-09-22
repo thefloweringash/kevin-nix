@@ -1,30 +1,25 @@
-{ stdenv, fetchgit, wayland, libdrm,
+{ stdenv, runCommand, fetchgit, libdrm, libX11, libxcb,
 
   driverName,
 }:
 
-stdenv.mkDerivation {
-  name = "rockchip-linux-libmali";
+runCommand "rockchip-linux-libmali" {
   src = fetchgit {
     url = "https://github.com/rockchip-linux/libmali";
-    rev = "6d53e639c8f9f35a4a3177cd7859a01c6a9e1b85";
-    sha256 = "0k8qksz12cx8jrabf3akvck7wam39nafaxrbv402wliyzlfzyyps";
+    rev = "9840771868ebda1f6c2a17dd24dcd674ef0ca36a";
+    sha256 = "11g557rckf2s86js5iqc2q75p8kz3xhph0ly6y4xs2g2pqy36r25";
   };
 
   driverFile = "lib/aarch64-linux-gnu/${driverName}";
 
   libPath = stdenv.lib.makeLibraryPath [
     stdenv.cc.cc.lib
-    wayland
     libdrm
+    libX11
+    libxcb
   ];
-
-  buildPhase = ''
-    patchelf --set-rpath "$libPath" $driverFile
-  '';
-
-  installPhase = ''
-    mkdir -p $out/lib
-    cp $driverFile $out/lib/libmali.so
-  '';
-}
+} ''
+  mkdir -p $out/lib
+  cp --no-preserve=mode $src/$driverFile $out/lib/libmali.so
+  patchelf --set-rpath "$libPath" $out/lib/libmali.so
+''
