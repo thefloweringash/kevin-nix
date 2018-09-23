@@ -19,8 +19,6 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
 {
   inherit (config.system.build)
     kernel
-    toplevel
-    sdImage
     ;
 
   inherit (pkgs)
