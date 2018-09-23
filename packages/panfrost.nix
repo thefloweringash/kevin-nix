@@ -23,8 +23,9 @@ mesa_drivers.overrideAttrs (o: {
     ln -s ${fetchgit {
       name = "panfrost";
       url = https://gitlab.freedesktop.org/panfrost/panfrost;
-      rev = "a25f2c0938874d71676c193aa31c20f99a7dcdf5"; # incremental-t8xx
-      sha256 = "1l6kz67m9cm2lhi8yb41vlb3ayva5li6r000zvpj2ffkq623lhqq";
+      # https://gitlab.freedesktop.org/panfrost/panfrost/merge_requests/2
+      rev = "9f5002f6e241ba45380dbb75955ae739996d102d"; # incremental-t8xx
+      sha256 = "09fga8z2a7f2ilkl76a32rhspvygfs8dm4ybsj9xmaf93iy845ak";
     }} src/gallium/drivers/panfrost
   '';
 })
