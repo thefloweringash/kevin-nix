@@ -44,8 +44,7 @@ configuration.nix, specify your desired kernel. For example:
 { config, lib, pkgs, ... }:
 {
   include = [
-    ./kevin-nix/modules/packages.nix
-    ./kevin-nix/modules/depthcharge.nix
+    ./kevin-nix/modules
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_gru_4_4;
