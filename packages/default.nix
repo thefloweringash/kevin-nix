@@ -13,6 +13,8 @@ self: super: {
 
   linuxPackages_gru_4_4 = super.linuxPackagesFor self.linux_gru_4_4;
 
+  alsaucm-kevin = super.callPackage ./alsaucm-kevin {};
+
   rockchip-linux-libmali = super.callPackage ./rockchip-linux-libmali/generic.nix {
     driverName = "libmali-midgard-t86x-r13p0-wayland.so";
   };
