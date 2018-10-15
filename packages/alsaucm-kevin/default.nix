@@ -9,9 +9,4 @@ runCommand "alsaucm-kevin" {
   cp --target-directory=$outdir \
     $src/rk3399-gru-sound.conf \
     $src/HiFi.conf
-
-  sed -i -E \
-    -e '/(Capture|Playback)PCM/s/rk3399-gru-sound/rk3399grusound/' \
-    -e '/PlaybackRate/d' \
-    $outdir/HiFi.conf
 ''
