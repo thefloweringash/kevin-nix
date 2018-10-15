@@ -5,10 +5,8 @@ with lib;
 let
   cfg = config.hardware.kevin.sound;
 
-  alsaucm-config = pkgs.buildEnv {
-    name = "alsaucm-config";
-    paths = with pkgs; [ alsaLib alsaucm-kevin ];
-    pathsToLink = [ "/share/alsa/ucm" ];
+  ucm-env = {
+    ALSA_CONFIG_UCM = "${pkgs.alsaucm-kevin}/share/alsa/ucm";
   };
 in
 {
@@ -18,8 +16,9 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = [ pkgs.alsaUtils ];
-    environment.variables = {
-      ALSA_CONFIG_UCM = "${alsaucm-config}/share/alsa/ucm";
-    };
+    environment.variables = ucm-env;
+
+    systemd.user.services.pulseaudio.serviceConfig.Environment =
+      mapAttrsToList (k: v: "${k}=${v}") ucm-env;
   };
 }
