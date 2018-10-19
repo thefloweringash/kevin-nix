@@ -71,7 +71,7 @@ in
     system.build.sdImage = pkgs.stdenv.mkDerivation {
       name = config.sdImage.imageName;
 
-      buildInputs = with pkgs; [ e2fsprogs parted libfaketime utillinux vboot_reference ];
+      buildInputs = with pkgs; [ e2fsprogs parted libfaketime utillinux vboot_reference xz ];
 
       diskUUID = "A8ABB0FA-2FD7-4FB8-ABB0-2EEB7CD66AFA";
       bootUUID = "534078AF-3BB4-EC43-B6C7-828FB9A788C6";
@@ -82,7 +82,7 @@ in
         export img=$out/sd-image/${config.sdImage.imageName}
 
         echo "${pkgs.stdenv.system}" > $out/nix-support/system
-        echo "file sd-image $img" >> $out/nix-support/hydra-build-products
+        echo "file sd-image $img.xz" >> $out/nix-support/hydra-build-products
 
         # Create the image file sized to fit /, plus 20M of slack, plus a kernel partition
         kernelSizeMegs=64
@@ -106,6 +106,8 @@ in
         # Copy the rootfs into the SD image
         eval $(partx $img -o START,SECTORS --nr 2 --pairs)
         dd conv=notrunc if=${rootfsImage} of=$img seek=$START count=$SECTORS
+
+        xz --threads 0 $img
       '';
     };
 
