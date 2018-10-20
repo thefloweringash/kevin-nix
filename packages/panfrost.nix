@@ -8,6 +8,7 @@
 mesa_drivers.overrideAttrs (o: {
   nativeBuildInputs = o.nativeBuildInputs ++ [ meson ninja bison flex ];
   buildInputs = o.buildInputs ++ [ xorg.libXrandr ];
+  mesonBuildType = "debugoptimized";
   mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost"];
   patches = [];
   postInstall = ":";
