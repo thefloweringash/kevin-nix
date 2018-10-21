@@ -1,5 +1,6 @@
 { nixpkgs ? { outPath = <nixpkgs>; }
 , stableBranch ? false
+, mesa ? null
 , panfrost ? null
 }:
 
@@ -23,6 +24,15 @@ let
     } else {});
   };
 
+  mesaSrcModule = if mesa != null then
+    {
+      nixpkgs.overlays = [(self: super: {
+        panfrost = super.panfrost.overrideAttrs (o: {
+          src = mesa;
+        });
+      })];
+    } else {};
+
   panfrostSrcModule = if panfrost != null then
     {
       nixpkgs.overlays = [(self: super: {
@@ -40,6 +50,7 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
     versionModule
     ./modules/mali.nix
     ./panfrost-live-environment.nix
+    mesaSrcModule
     panfrostSrcModule
   ];
 });
