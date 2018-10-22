@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, freetype }:
+{ stdenv, fetchFromGitHub, freetype }:
 
 stdenv.mkDerivation rec {
   name = "otf2bdf-${version}";
@@ -11,8 +11,10 @@ stdenv.mkDerivation rec {
     ./0002-Fix-generate_font-return-value.patch
   ];
 
-  src = fetchurl {
-    url = "https://www.math.nmsu.edu/~mleisher/Software/otf2bdf/otf2bdf-3.1.tgz";
-    sha256 = "1npsmd9a815h7fw0w2w34106hkk77901lcvvbfnqcww62f30ndv1";
+  src = fetchFromGitHub {
+    owner = "jirutka";
+    repo = "otf2bdf";
+    rev = "cc7f1b5a1220b3a3ffe356e056e6627c64bdf122";
+    sha256 = "1q4k75wmxbdbby542glsckyycghlf1sgp9gl0qf1d1hagjp5kbqw";
   };
 }
