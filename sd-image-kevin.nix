@@ -5,8 +5,7 @@
     <nixpkgs/nixos/modules/profiles/base.nix>
     <nixpkgs/nixos/modules/profiles/installation-device.nix>
     ./sd-image-depthcharge.nix
-    ./modules/packages.nix
-    ./modules/depthcharge.nix
+    ./modules
   ];
 
   assertions = lib.singleton {
@@ -24,4 +23,8 @@
   boot.loader.grub.enable = false;
 
   boot.kernelParams = [ "console=tty1" ];
+
+  hardware.kevin.console-font.fontfile =
+    "${pkgs.source-code-pro}/share/fonts/opentype/SourceCodePro-Regular.otf";
+
 }
