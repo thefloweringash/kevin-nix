@@ -22,4 +22,8 @@ self: super: {
   rockchip-linux-libmali-gldriver = self.libmali-gldriver {
     libmali = self.rockchip-linux-libmali;
   };
+
+  otf2bdf = super.callPackage ./otf2bdf {};
+
+  ttf-console-font = super.callPackage ./ttf-console-font.nix {};
 }
