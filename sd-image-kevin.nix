@@ -15,7 +15,7 @@
       "it cannot be cross compiled";
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_gru_4_4;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_gru_4_4;
 
   sdImage.kpart = "${config.system.build.toplevel}/kpart";
   sdImage.storePaths = [ config.system.build.toplevel ];
