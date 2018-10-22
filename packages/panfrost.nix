@@ -32,8 +32,7 @@ mesa_drivers.overrideAttrs (o: {
     sha256 = "056smp4nkxcml1phmf4wspygjlrrjcnh1zykm634qfw91c0mizxk";
   };
   preConfigure = ''
-    rm src/gallium/drivers/panfrost
-    ln -s ${
+    ln -sf ${
       if panfrostDriverSource != null
       then panfrostDriverSource
       else defaultPanfrostDriverSource
