@@ -6,6 +6,7 @@
     <nixpkgs/nixos/modules/profiles/installation-device.nix>
     ./sd-image-depthcharge.nix
     ./modules
+    ./channel.nix
   ];
 
   assertions = lib.singleton {
