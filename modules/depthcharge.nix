@@ -24,7 +24,7 @@ in
   options = {
     boot.loader.depthcharge = {
       enable = mkOption {
-        default = true;
+        default = false;
         type = types.bool;
         description = ''
           Whether to enable Depthcharge compatibility.
@@ -32,8 +32,7 @@ in
       };
 
       partition = mkOption {
-        default = "";
-        example = "/dev/disk/by-partlabel/kenrel";
+        example = "/dev/disk/by-partlabel/kernel";
         type = types.str;
         description = ''
           The kernel partition that holds the boot configuration.
