@@ -61,6 +61,11 @@ in
   };
 
   config = {
+    boot.loader.depthcharge = {
+      enable = true;
+      partition = "nodev";
+    };
+
     fileSystems = {
       "/" = {
         device = "/dev/disk/by-label/NIXOS_SD";

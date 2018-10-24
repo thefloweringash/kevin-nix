@@ -35,7 +35,9 @@ in
         example = "/dev/disk/by-partlabel/kernel";
         type = types.str;
         description = ''
-          The kernel partition that holds the boot configuration.
+          The kernel partition that holds the boot configuration. The
+          value "nodev" indiciates the kpart partition should be
+          created but not installed.
         '';
       };
     };
@@ -60,8 +62,12 @@ in
         exit 1
       fi
 
-      echo "Installing kpart at $kpart to ${cfg.partition}"
-      dd if="$kpart" of="${cfg.partition}"
+      ${if cfg.partition != "nodev" then ''
+        echo "Installing kpart at $kpart to ${cfg.partition}"
+        dd if="$kpart" of="${cfg.partition}"
+      '' else ''
+        echo "Kpart produced at $kpart, but automatic installation is disabled.
+      ''}
     '';
   };
 }
