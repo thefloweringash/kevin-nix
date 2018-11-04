@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, options, ... }:
 
 let
   xresources = pkgs.writeText "Xresources" ''
@@ -7,6 +7,8 @@ let
     Xcursor.size: 48
     Xcursor.theme: Adwaita
   '';
+
+  sway-module = if options.programs ? "sway-beta" then "sway-beta" else "sway";
 in
 {
   boot.kernelPackages = pkgs.linuxPackages_gru_4_4_86;
@@ -68,6 +70,7 @@ in
   };
 
   programs.light.enable = true;
+  programs."${sway-module}".enable = true;
 
   environment.systemPackages = with pkgs; [
     # System essentials
