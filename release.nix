@@ -22,4 +22,8 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
     toplevel
     sdImage
     ;
+
+  inherit (config.boot.kernelPackages)
+    wireguard
+    ;
 }
