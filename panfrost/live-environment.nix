@@ -2,7 +2,9 @@
 
 let
   xresources = pkgs.writeText "Xresources" ''
+    XTerm*font: xft:SourceCodePro:size=9
     UXTerm*font: xft:SourceCodePro:size=9
+    URxvt.font: xft:SourceCodePro:size=9
 
     Xcursor.size: 48
     Xcursor.theme: Adwaita
