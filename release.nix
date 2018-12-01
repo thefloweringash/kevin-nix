@@ -26,4 +26,8 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
   inherit (config.boot.kernelPackages)
     wireguard
     ;
+
+  inherit (pkgs)
+    xf86-input-cmt
+    ;
 }

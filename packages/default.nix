@@ -43,4 +43,12 @@ self: super: {
   otf2bdf = super.callPackage ./otf2bdf {};
 
   ttf-console-font = super.callPackage ./ttf-console-font.nix {};
+
+  libevdevc = super.callPackage ./libevdevc.nix {};
+
+  libgestures = super.callPackage ./libgestures {};
+
+  xf86-input-cmt = super.callPackage ./xf86-input-cmt.nix {};
+
+  chromium-xorg-conf = super.callPackage ./chromium-xorg-conf.nix {};
 }
