@@ -51,4 +51,6 @@ self: super: {
   xf86-input-cmt = super.callPackage ./xf86-input-cmt.nix {};
 
   chromium-xorg-conf = super.callPackage ./chromium-xorg-conf.nix {};
+
+  kevin-tablet-mode = super.callPackage ./kevin-tablet-mode.nix {};
 }
