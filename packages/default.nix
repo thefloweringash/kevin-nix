@@ -28,6 +28,12 @@ self: super: {
 
   linuxPackages_gru_4_4_86 = self.linuxPackagesFor self.linux_gru_4_4_86;
 
+  linuxPackages_latest_noefi = self.recurseIntoAttrs (self.linuxPackagesFor (self.linux_latest.override {
+    structuredExtraConfig = {
+      EFI = "n";
+    };
+  }));
+
   linuxPackagesFor = kernel: (super.linuxPackagesFor kernel).extend (kself: ksuper: {
     mali_kbase = ksuper.callPackage ./mali_kbase.nix {};
   });
