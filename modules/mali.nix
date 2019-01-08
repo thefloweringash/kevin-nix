@@ -12,7 +12,7 @@ in
   config = lib.mkMerge [
     {
       services.udev.extraRules = ''
-        KERNEL=="mali[0-9]", TAG+="uaccess"
+        KERNEL=="mali[0-9]", MODE="0600", TAG+="uaccess"
       '';
     }
     (lib.mkIf cfg.panfrost.enable {
