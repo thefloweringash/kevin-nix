@@ -51,6 +51,10 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
     sdImage
     ;
 
+  inherit (config.boot.kernelPackages)
+    mali_kbase
+    ;
+
   inherit (pkgs)
     panfrost
     ;
