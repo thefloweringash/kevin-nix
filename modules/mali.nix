@@ -11,9 +11,8 @@ in
 
   config = lib.mkMerge [
     {
-      # TODO: this should probably be integrated with login sessions.
       services.udev.extraRules = ''
-        KERNEL=="mali[0-9]", MODE="0660", GROUP="video"
+        KERNEL=="mali[0-9]", TAG+="uaccess"
       '';
     }
     (lib.mkIf cfg.panfrost.enable {
