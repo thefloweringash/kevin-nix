@@ -40,6 +40,16 @@ in
           created but not installed.
         '';
       };
+
+      dtbs = mkOption {
+        example = [ "dtbs/rockchip/rk3399-gru-kevin.dtb" ];
+        type = types.nullOr (types.listOf types.str);
+        default = null;
+        description = ''
+          Paths to dtb files to include in the kpart.  If null (the
+          default), all dtbs are included.
+        '';
+      };
     };
   };
 
@@ -47,7 +57,9 @@ in
     system.boot.loader.id = "depthcharge";
 
     system.extraSystemBuilderCmds = ''
-      ${make_kpart} $out
+      ${make_kpart} $out ${pkgs.lib.optionalString (cfg.dtbs != null)
+        (pkgs.lib.escapeShellArgs cfg.dtbs)
+      }
     '';
 
     system.build.installBootLoader = pkgs.writeScript "install-depthcharge.sh" ''

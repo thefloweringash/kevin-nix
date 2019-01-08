@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 out=$1
+shift
 
 PATH="@dtc@/bin:$PATH"
 
-@make_kernel_its@ $out > $out/kernel.its
+@make_kernel_its@ $out "$@" > $out/kernel.its
 
 @ubootTools@/bin/mkimage -D "-I dts -O dtb -p 2048" -f $out/kernel.its $out/vmlinux.uimg
 

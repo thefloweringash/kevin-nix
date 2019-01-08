@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
 toplevel=$1
+shift
 
 cd $toplevel
 
-dtb_files=($(find -L dtbs -type f -name '*.dtb'))
+if [ "$#" -eq 0 ]; then
+    dtb_files=($(find -L dtbs -type f -name '*.dtb'))
+else
+    dtb_files=("$@")
+fi
 
 fdt_definition() {
     local idx=$1
@@ -65,17 +70,17 @@ cat <<EOF
 EOF
 
 for index in "${!dtb_files[@]}"; do
-    fdt_definition $index ${dtb_files[$index]}
+    fdt_definition $(($index + 1)) ${dtb_files[$index]}
 done
 
 cat <<EOF
     };
     configurations {
-        default = "conf@0";
+        default = "conf@1";
 EOF
 
 for index in "${!dtb_files[@]}"; do
-    fdt_reference $index
+    fdt_reference $(($index + 1))
 done
 
 cat <<EOF
