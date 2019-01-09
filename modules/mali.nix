@@ -17,7 +17,7 @@ in
     }
     (lib.mkIf cfg.panfrost.enable {
       hardware.opengl.package = pkgs.panfrost;
-      boot.extraModulePackages = [ config.boot.linuxPackages.mali_kbase ];
+      boot.extraModulePackages = [ config.boot.kernelPackages.mali_kbase ];
     })
     (lib.mkIf cfg.libmali.enable {
       # This is wishful thinking until the versions match
