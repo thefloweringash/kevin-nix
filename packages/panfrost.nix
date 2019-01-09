@@ -11,8 +11,8 @@ let
   defaultPanfrostSource = fetchgit {
     name = "panfrost";
     url = https://gitlab.freedesktop.org/panfrost/mesa.git/;
-    rev = "283a2a86d3414a8d270860b8f8c9aec2b9e6821f"; # master
-    sha256 = "0qp6bqp2ll30xmnzavnqsckc733pifclh1vrbvcpawr7dp9dhqz4";
+    rev = "76ae2649d4071b3a09394ee91c1608aeefbaab01"; # master
+    sha256 = "0fa8jr365a6pd0kz76h6mq9mx916whiknm7vsrjz0j5zcg8fscv5";
   };
 in
 
@@ -21,7 +21,7 @@ mesa_drivers.overrideAttrs (o: {
   nativeBuildInputs = o.nativeBuildInputs ++ [ meson ninja bison flex ];
   buildInputs = o.buildInputs ++ [ xorg.libXrandr ];
   mesonBuildType = "debugoptimized";
-  mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost"];
+  mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost,rockchip"];
   patches = [];
   postInstall = ":";
   outputs = ["out"];
