@@ -43,11 +43,11 @@ cat <<EOF
     images {
         kernel@1{
             description = "kernel";
-            data = /incbin/("kernel");
+            data = /incbin/("kernel.lz4");
             type = "kernel_noload";
             arch = "arm64";
             os = "linux";
-            compression = "none";
+            compression = "lz4";
             load = <0>;
             entry = <0>;
         };

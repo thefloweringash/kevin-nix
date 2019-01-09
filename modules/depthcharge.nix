@@ -12,7 +12,7 @@ let
   '';
 
   make_kpart = pkgs.runCommand "make-kpart.sh" {
-    inherit (pkgs) vboot_reference ubootTools dtc;
+    inherit (pkgs) vboot_reference ubootTools dtc lz4;
     inherit make_kernel_its;
   } ''
     substituteAll ${./make-kpart.sh} $out

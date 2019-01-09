@@ -4,6 +4,8 @@ out=$1
 
 PATH="@dtc@/bin:$PATH"
 
+@lz4@/bin/lz4 $out/kernel $out/kernel.lz4
+
 @make_kernel_its@ $out > $out/kernel.its
 
 @ubootTools@/bin/mkimage -D "-I dts -O dtb -p 2048" -f $out/kernel.its $out/vmlinux.uimg
