@@ -1,5 +1,5 @@
-{ stdenv, fetchFromGitHub, pkgconfig, xorgserver, xproto,
-  inputproto, utilmacros, libgestures, libevdevc }:
+{ stdenv, fetchFromGitHub, pkgconfig, xorgserver, xorgproto,
+  utilmacros, libgestures, libevdevc }:
 
 stdenv.mkDerivation rec {
   name = "xf86-input-cmt-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [
-    xorgserver xproto inputproto utilmacros
+    xorgserver xorgproto utilmacros
     libgestures libevdevc
   ];
 
