@@ -28,4 +28,5 @@
   hardware.kevin.console-font.fontfile =
     "${pkgs.source-code-pro}/share/fonts/opentype/SourceCodePro-Regular.otf";
 
+  boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
 }
