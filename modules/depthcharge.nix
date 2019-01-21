@@ -66,7 +66,7 @@ in
         echo "Installing kpart at $kpart to ${cfg.partition}"
         dd if="$kpart" of="${cfg.partition}"
       '' else ''
-        echo "Kpart produced at $kpart, but automatic installation is disabled.
+        echo "Kpart produced at $kpart, but automatic installation is disabled."
       ''}
     '';
   };
