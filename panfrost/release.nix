@@ -2,6 +2,7 @@
 , stableBranch ? false
 , panfrost ? null
 , mali_kbase ? null
+, nondrm ? null
 }:
 
 let
@@ -39,6 +40,15 @@ let
       })];
     } else {};
 
+  nondrmSrcModule = if nondrm != null then
+    {
+      nixpkgs.overlays = [(self: super: {
+        panfrost = super.panfrost.override {
+          panfrostNondrmSource = nondrm;
+        };
+      })];
+    } else {};
+
   mali_kbaseSrcModule = if mali_kbase != null then
     {
       nixpkgs.overlays = [(self: super: {
@@ -59,6 +69,7 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
     ../modules/mali.nix
     ./live-environment.nix
     panfrostSrcModule
+    nondrmSrcModule
     mali_kbaseSrcModule
   ];
 });

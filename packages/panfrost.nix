@@ -5,14 +5,22 @@
 , bison, flex
 , xorg
 , panfrostSource ? null
+, panfrostNondrmSource ? null
 , versionSuffix ? "-panfrost"
 }:
 let
   defaultPanfrostSource = fetchgit {
     name = "panfrost";
-    url = https://gitlab.freedesktop.org/panfrost/mesa.git/;
-    rev = "76ae2649d4071b3a09394ee91c1608aeefbaab01"; # master
-    sha256 = "0fa8jr365a6pd0kz76h6mq9mx916whiknm7vsrjz0j5zcg8fscv5";
+    url = https://gitlab.freedesktop.org/mesa/mesa.git/;
+    rev = "49397a3c840b38f8c65705dd05d642c0beb4dea9"; # master
+    sha256 = "0xfr47b6q1i2ss30nmxkp7jcw2jk7x24x8wcd2n1fkkh0s145hs7";
+  };
+
+  panfrostNondrmSource = fetchgit {
+    name = "nondrm";
+    url = "https://gitlab.freedesktop.org/panfrost/nondrm";
+    rev = "2363a3be0a8d999b4fcccfde4fc4808a8fca758e"; # master
+    sha256 = "0cz5jz4fnnqiisra3f5xg42jk2g276aw8k2cvjzcvwwspbjacw86";
   };
 in
 
@@ -21,10 +29,13 @@ mesa_drivers.overrideAttrs (o: {
   nativeBuildInputs = o.nativeBuildInputs ++ [ meson ninja bison flex ];
   buildInputs = o.buildInputs ++ [ xorg.libXrandr ];
   mesonBuildType = "debugoptimized";
-  mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost,rockchip"];
+  mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost,kmsro" "-Dlibunwind=false"];
   patches = [];
   postInstall = ":";
   outputs = ["out"];
+  preBuild = ''
+    ln -sfT ${panfrostNondrmSource} src/gallium/drivers/panfrost/nondrm
+  '';
   src =
     if panfrostSource != null
     then panfrostSource
