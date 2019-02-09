@@ -33,7 +33,7 @@ mesa_drivers.overrideAttrs (o: {
   patches = [];
   postInstall = ":";
   outputs = ["out"];
-  preBuild = ''
+  preConfigure = ''
     ln -sfT ${panfrostNondrmSource} src/gallium/drivers/panfrost/nondrm
   '';
   src =
