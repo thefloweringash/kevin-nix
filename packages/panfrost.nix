@@ -30,7 +30,7 @@ mesa_drivers.overrideAttrs (o: {
   buildInputs = o.buildInputs ++ [ xorg.libXrandr ];
   mesonBuildType = "debugoptimized";
   mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost,kmsro" "-Dlibunwind=false"];
-  patches = [];
+  patches = [ ./panfrost-nondrm.patch ];
   postInstall = ":";
   outputs = ["out"];
   preConfigure = ''

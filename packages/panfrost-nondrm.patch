@@ -1,0 +1,12 @@
+diff --git a/src/gallium/drivers/panfrost/meson.build b/src/gallium/drivers/panfrost/meson.build
+index 5e799eae119..d501471e572 100644
+--- a/src/gallium/drivers/panfrost/meson.build
++++ b/src/gallium/drivers/panfrost/meson.build
+@@ -66,6 +66,7 @@ if has_nondrm_overlay
+   files_panfrost += files('nondrm/pan_nondrm.c')
+   inc_panfrost += include_directories('nondrm/include')
+   compile_args_panfrost += '-DPAN_NONDRM_OVERLAY'
++  subdir('nondrm/include')
+ endif
+ 
+ midgard_nir_algebraic_c = custom_target(
