@@ -13,7 +13,7 @@ let
   sway-module = if options.programs ? "sway-beta" then "sway-beta" else "sway";
 in
 {
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   fonts.fontconfig.dpi = 192;
 
