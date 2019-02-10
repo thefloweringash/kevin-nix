@@ -6,9 +6,9 @@ stdenv.mkDerivation rec {
   name = "${pname}-${version}";
 
   src = fetchgit {
-    url = "https://gitlab.freedesktop.org/tomeu/mali_kbase";
-    rev = "3eae495ac64fd0d0f8d7b547d249202d52e9b7f1"; # master
-    sha256 = "0qlp30kfsymr23xplji5wlqk15mmi2q4lqqrzh49c8iayqdwyqay";
+    url = "https://gitlab.freedesktop.org/panfrost/mali_kbase";
+    rev = "c59a1cd7c66f0800c826814ac1096e3a746e2a91"; # master
+    sha256 = "1ms72x4snrpps84ppx62hfbq3y4wlb9nsdh2r3i7r1zhbwnpf9fi";
   };
 
   KDIR = "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build";
