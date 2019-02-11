@@ -16,7 +16,7 @@ let
     sha256 = "0xfr47b6q1i2ss30nmxkp7jcw2jk7x24x8wcd2n1fkkh0s145hs7";
   };
 
-  panfrostNondrmSource = fetchgit {
+  defaultPanfrostNondrmSource = fetchgit {
     name = "nondrm";
     url = "https://gitlab.freedesktop.org/panfrost/nondrm";
     rev = "2363a3be0a8d999b4fcccfde4fc4808a8fca758e"; # master
@@ -34,7 +34,11 @@ mesa_drivers.overrideAttrs (o: {
   postInstall = ":";
   outputs = ["out"];
   preConfigure = ''
-    ln -sfT ${panfrostNondrmSource} src/gallium/drivers/panfrost/nondrm
+    ln -sfT ${
+      if panfrostNondrmSource != null
+      then panfrostNondrmSource
+      else defaultPanfrostNondrmSource
+    } src/gallium/drivers/panfrost/nondrm
   '';
   src =
     if panfrostSource != null
