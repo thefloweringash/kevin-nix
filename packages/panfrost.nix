@@ -4,6 +4,7 @@
 , meson, ninja
 , bison, flex
 , xorg
+, autoreconfHook
 , panfrostSource ? null
 , panfrostNondrmSource ? null
 , versionSuffix ? "-panfrost"
@@ -26,7 +27,7 @@ in
 
 mesa_drivers.overrideAttrs (o: {
   name = o.name + versionSuffix;
-  nativeBuildInputs = o.nativeBuildInputs ++ [ meson ninja bison flex ];
+  nativeBuildInputs = (stdenv.lib.remove autoreconfHook o.nativeBuildInputs) ++ [ meson ninja bison flex ];
   buildInputs = o.buildInputs ++ [ xorg.libXrandr ];
   mesonBuildType = "debugoptimized";
   mesonFlags = ["-Ddri-drivers=" "-Dvulkan-drivers=" "-Dgallium-drivers=panfrost,kmsro" "-Dlibunwind=false"];
