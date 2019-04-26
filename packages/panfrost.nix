@@ -13,15 +13,15 @@ let
   defaultPanfrostSource = fetchgit {
     name = "panfrost";
     url = https://gitlab.freedesktop.org/mesa/mesa.git/;
-    rev = "49397a3c840b38f8c65705dd05d642c0beb4dea9"; # master
-    sha256 = "0xfr47b6q1i2ss30nmxkp7jcw2jk7x24x8wcd2n1fkkh0s145hs7";
+    rev = "5d310015c57536224600252e4ceadcf964bfc4fa"; # master
+    sha256 = "0i9xk0c3hm5x60p6zx3i9ggfrjyhnhzs2jzyjnm6ip71wj1s7s0v";
   };
 
   defaultPanfrostNondrmSource = fetchgit {
     name = "nondrm";
     url = "https://gitlab.freedesktop.org/panfrost/nondrm";
-    rev = "2363a3be0a8d999b4fcccfde4fc4808a8fca758e"; # master
-    sha256 = "0cz5jz4fnnqiisra3f5xg42jk2g276aw8k2cvjzcvwwspbjacw86";
+    rev = "6fb97dae1b372fe26cc05d6342b7bf32eb26db5f"; # master
+    sha256 = "0jyw99hkh6k6d9fv1l8p3jzw1f60dnbni0j73z2m4swv1zv6disd";
   };
 in
 
