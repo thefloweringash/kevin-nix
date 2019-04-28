@@ -28,9 +28,14 @@ self: super: {
 
   linuxPackages_gru_4_4_86 = self.linuxPackagesFor self.linux_gru_4_4_86;
 
-  linuxPackagesFor = kernel: (super.linuxPackagesFor kernel).extend (kself: ksuper: {
-    mali_kbase = ksuper.callPackage ./mali_kbase.nix {};
-  });
+  linux_panfrost = self.callPackage ./linux_panfrost {
+    kernelPatches = with self; [
+      kernelPatches.bridge_stp_helper
+      kernelPatches.modinst_arg_list_too_long
+    ];
+  };
+
+  linuxPackages_panfrost = self.linuxPackagesFor self.linux_panfrost;
 
   rockchip-linux-libmali = super.callPackage ./rockchip-linux-libmali/generic.nix {
     driverName = "libmali-midgard-t86x-r13p0-wayland.so";

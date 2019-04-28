@@ -1,7 +1,6 @@
 { nixpkgs ? { outPath = <nixpkgs>; }
 , stableBranch ? false
 , panfrost ? null
-, mali_kbase ? null
 , nondrm ? null
 }:
 
@@ -9,11 +8,6 @@ let
   panfrostSuffix =
     if panfrost ? revCount && panfrost ? shortRev
     then "-panfrost${toString panfrost.revCount}.${panfrost.shortRev}"
-    else "";
-
-  mali_kbaseSuffix =
-    if mali_kbase ? revCount && mali_kbase ? shortRev
-    then "-${toString mali_kbase.revCount}.${mali_kbase.shortRev}"
     else "";
 
   nixSuffix =
@@ -39,27 +33,6 @@ let
         };
       })];
     } else {};
-
-  nondrmSrcModule = if nondrm != null then
-    {
-      nixpkgs.overlays = [(self: super: {
-        panfrost = super.panfrost.override {
-          panfrostNondrmSource = nondrm;
-        };
-      })];
-    } else {};
-
-  mali_kbaseSrcModule = if mali_kbase != null then
-    {
-      nixpkgs.overlays = [(self: super: {
-        linuxPackagesFor = kernel: (super.linuxPackagesFor kernel).extend (kself: ksuper: {
-          mali_kbase = ksuper.mali_kbase.overrideAttrs ({ pname, ... }: {
-            name = "${pname}${mali_kbaseSuffix}";
-            src = mali_kbase;
-          });
-        });
-      })];
-    } else {};
 in
 
 with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
@@ -69,8 +42,6 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
     ../modules/mali.nix
     ./live-environment.nix
     panfrostSrcModule
-    nondrmSrcModule
-    mali_kbaseSrcModule
   ];
 });
 
@@ -79,10 +50,6 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
     kernel
     toplevel
     sdImage
-    ;
-
-  inherit (config.boot.kernelPackages)
-    mali_kbase
     ;
 
   inherit (pkgs)

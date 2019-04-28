@@ -29,5 +29,7 @@ with (import (nixpkgs+"/nixos/lib/eval-config.nix") {
 
   inherit (pkgs)
     xf86-input-cmt
+    linux_panfrost
+    panfrost
     ;
 }
