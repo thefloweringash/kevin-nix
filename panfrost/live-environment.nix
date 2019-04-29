@@ -36,7 +36,7 @@ in
   networking.networkmanager.enable = true;
 
   services.xserver = {
-    enable = true;
+    enable = false;
     layout = "us";
 
     dpi = 192;
