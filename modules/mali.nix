@@ -16,7 +16,7 @@ in
       '';
     }
     (lib.mkIf cfg.panfrost.enable {
-      hardware.opengl.package = pkgs.panfrost;
+      # hardware.opengl.package = pkgs.panfrost;
       boot.kernelPackages = pkgs.linuxPackages_panfrost;
     })
     (lib.mkIf cfg.libmali.enable {
