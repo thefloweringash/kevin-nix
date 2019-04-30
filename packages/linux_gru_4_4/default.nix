@@ -1,5 +1,5 @@
 { stdenv, runCommand, fetchgit, linuxManualConfig,
-  features ? {}, kernelPatches ? [] }:
+  features ? {}, kernelPatches ? [], randstructSeed ? null }:
 
 # Additional features cannot be added to this kernel
 assert features == {};
@@ -7,7 +7,7 @@ assert features == {};
 let
   passthru = { features = {}; };
 
-  drv = linuxManualConfig {
+  drv = linuxManualConfig ({
     inherit stdenv kernelPatches;
 
     src = fetchgit {
@@ -22,7 +22,7 @@ let
     configfile = ./linux-gru.config;
 
     allowImportFromDerivation = true; # Let nix check the assertions about the config
-  };
+  } // stdenv.lib.optionalAttrs (randstructSeed != null) { inherit randstructSeed; });
 
 in
 
