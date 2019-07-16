@@ -8,6 +8,7 @@ self: super: {
       { name = "arch-1"; patch = ./linux_gru_4_4/0001-Input-atmel_mxt_ts-Use-KERN_DEBUG-loglevel-for-statu.patch; }
       { name = "arch-2"; patch = ./linux_gru_4_4/0002-Revert-CHROMIUM-drm-rockchip-Add-PSR-residency-debug.patch; }
       { name = "arch-3"; patch = ./linux_gru_4_4/0003-temporary-hack-to-fix-console-output.patch; }
+      { name = "me-1"; patch = ./linux_gru_4_4/0004-fix-crc.patch; }
     ];
   };
 
