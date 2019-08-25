@@ -4,7 +4,7 @@ out=$1
 
 PATH="@dtc@/bin:$PATH"
 
-@lz4@/bin/lz4 $out/kernel $out/kernel.lz4
+@xz@/bin/lzma --threads 0 < $out/kernel > $out/kernel.lzma
 
 @make_kernel_its@ $out > $out/kernel.its
 
