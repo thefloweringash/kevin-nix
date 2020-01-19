@@ -24,19 +24,24 @@ let
     export PATH=${lib.makeBinPath [ pkgs.vboot_reference ]}:$PATH
 
     deviceToDisk() {
-      lsblk -no pkname "$1"
+      local device=$1
+      local name
+      name=$(lsblk -no pkname "$device")
+      echo "/dev/$name"
     }
 
     deviceToIndex() {
-      local part_uuid
-      part_uuid=$(lsblk -no UUID "$1" | tr 'a-f' 'A-F')
-      cgpt find -n -u "$part_uuid"
+      local disk=$1
+      local device=$2
+      local PARTUUID
+      source <(blkid --output export "$device" | grep '^PARTUUID=' | tr 'a-f' 'A-F')
+      cgpt find -n -u "$PARTUUID" "$disk"
     }
 
     primary_disk=$(deviceToDisk ${cfg.partition})
-    primary_index=$(deviceToIndex ${cfg.partition})
+    primary_index=$(deviceToIndex "$primary_disk" ${cfg.partition})
     fallback_disk=$(deviceToDisk ${cfg.fallbackPartition})
-    fallback_index=$(deviceToIndex ${cfg.fallbackPartition})
+    fallback_index=$(deviceToIndex "$fallback_disk" ${cfg.fallbackPartition})
 
     if [ "$primary_disk" != "$fallback_disk" ]; then
       echo "Primary partition and fallback partition are not on the same disk" >&2
@@ -68,6 +73,7 @@ in
       fallbackPartition = mkOption {
         example = "/dev/disk/by-partlabel/kernel-fallback";
         type = types.nullOr types.str;
+        default = null;
         description = ''
           If not null, this partition will be used to boot a known
           good system if the primary partition fails to boot.
@@ -85,6 +91,7 @@ in
 
     system.build.installBootLoader = pkgs.writeScript "install-depthcharge.sh" ''
       #!${pkgs.stdenv.shell}
+      set -x
       set -euo pipefail
       system=$1
       kpart=$system/kpart
@@ -104,7 +111,7 @@ in
             dd if=/run/booted-system/kpart of="${cfg.fallbackPartition}"
 
             echo "Setting known good configuration as known good"
-            cgpt add -i $fallback_index --priority 1 --tries 0 --successful 1 "$fallback_disk"
+            cgpt add -i "$fallback_index" -T 0 -S 1 "$fallback_disk"
           fi
         ''}
 
@@ -113,8 +120,8 @@ in
 
         ${lib.optionalString (cfg.fallbackPartition != null) ''
           echo "Setting new kpart state"
-          cgpt add -i $primary_index --priority 1 --tries 1 --successful 0 "primary_disk"
-          cgpt prioritize -i $primary_index "$primary_disk"
+          cgpt add -i "$primary_index" -T 1 -S 0 "$primary_disk"
+          cgpt prioritize -i "$primary_index" "$primary_disk"
         ''}
       '' else ''
         echo "Kpart produced at $kpart, but automatic installation is disabled."
@@ -138,14 +145,13 @@ in
           local partition=$1
           local disk=$2
           local index=$3
-          if cmp -n "$kpart_length" "$good_kpart""$1"; then
+          if cmp -n "$kpart_length" "$good_kpart" "$partition"; then
             echo "Booted system found at $partition, setting successful flag on $disk:$index"
             cgpt add -i "$index" --successful 1 "$disk"
           fi
         }
 
         set_active_if_match "${cfg.partition} "$primary_disk" "$primary_index"
-        set_active_if_match "${cfg.fallbackPartition} "$fallback_disk" "$fallback_index"
       '';
     };
   };
