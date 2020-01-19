@@ -21,7 +21,7 @@ let
   '';
 
   fallbackDeviceSetup = optionalString (cfg.fallbackPartition != null) ''
-    export PATH=${lib.makeBinPath [ pkgs.vboot_reference ]}:$PATH
+    export PATH=${lib.makeBinPath [ pkgs.vboot_reference pkgs.utillinux ]}:$PATH
 
     deviceToDisk() {
       local device=$1
@@ -121,7 +121,6 @@ in
         ${lib.optionalString (cfg.fallbackPartition != null) ''
           echo "Setting new kpart state"
           cgpt add -i "$primary_index" -T 1 -S 0 "$primary_disk"
-          cgpt prioritize -i "$primary_index" "$primary_disk"
         ''}
       '' else ''
         echo "Kpart produced at $kpart, but automatic installation is disabled."
