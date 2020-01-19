@@ -131,6 +131,7 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "multi-user.target" ];
       script = ''
+        set -x
         set -euo pipefail
 
         ${fallbackDeviceSetup}
@@ -147,11 +148,15 @@ in
           if cmp -n "$kpart_length" "$good_kpart" "$partition"; then
             echo "Booted system found at $partition, setting successful flag on $disk:$index"
             cgpt add -i "$index" --successful 1 "$disk"
+            cgpt prioritize -i "$index" "$disk"
+          else
+            echo "$partition doesn't match"
           fi
         }
 
-        set_active_if_match "${cfg.partition} "$primary_disk" "$primary_index"
+        set_active_if_match "${cfg.partition}" "$primary_disk" "$primary_index"
       '';
+      path = with pkgs; [ diffutils vboot_reference ];
     };
   };
 }
