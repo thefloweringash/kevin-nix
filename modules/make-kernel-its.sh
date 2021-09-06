@@ -11,13 +11,13 @@ fdt_definition() {
     local filename=$2
     local basename=$(basename $filename)
     cat <<EOF
-        fdt@${idx}{
+        fdt-${idx}{
             description = "${basename}";
             data = /incbin/("${filename}");
             type = "flat_dt";
             arch = "arm64";
             compression = "none";
-            hash@1{
+            hash-1{
                 algo = "sha1";
             };
         };
@@ -27,10 +27,10 @@ EOF
 fdt_reference() {
     local idx=$1
     cat <<EOF
-        conf@${idx}{
-            kernel = "kernel@1";
-            fdt = "fdt@${idx}";
-            ramdisk = "ramdisk@1";
+        conf-${idx}{
+            kernel = "kernel-1";
+            fdt = "fdt-${idx}";
+            ramdisk = "ramdisk-1";
         };
 EOF
 }
@@ -41,7 +41,7 @@ cat <<EOF
 / {
     description = "Chrome OS kernel image with one or more FDT blobs";
     images {
-        kernel@1{
+        kernel-1{
             description = "kernel";
             data = /incbin/("kernel.lzma");
             type = "kernel_noload";
@@ -51,14 +51,14 @@ cat <<EOF
             load = <0>;
             entry = <0>;
         };
-        ramdisk@1 {
+        ramdisk-1 {
             description = "ramdisk";
             data = /incbin/("initrd");
             type = "ramdisk";
             arch = "arm64";
             os = "linux";
             compression = "none";
-            hash@1 {
+            hash-1 {
                 algo = "sha1";
             };
         };
@@ -71,7 +71,7 @@ done
 cat <<EOF
     };
     configurations {
-        default = "conf@0";
+        default = "conf-0";
 EOF
 
 for index in "${!dtb_files[@]}"; do
