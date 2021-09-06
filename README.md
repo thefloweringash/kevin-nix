@@ -113,3 +113,9 @@ Tested against nixpkgs f607771d0f5.
    rockchip.
 
 [rockchip-linux/libmali]: https://github.com/rockchip-linux/libmali
+
+## License
+
+Everything original to this repository is MIT licensed. Packages are
+naturally covered by their own licences. The linux_gru patches and
+config files are from archlinuxarm which is covered by the GPLv2.
